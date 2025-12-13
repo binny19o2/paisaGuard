@@ -1,0 +1,77 @@
+<div class="min-h-screen bg-gradient-to-br from-primary-50 via-secondary-50 to-accent-50 flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <!-- Logo Section -->
+    <div class="text-center mb-8">
+  <div class="flex items-center justify-center w-full mb-4 transform hover:scale-105 transition-transform duration-300">
+        <!-- Primary logo: place your logo at src/assets/logo.png -->
+        <img
+          src="logo.png"
+          alt="PaisaGuard logo"
+          class="mx-auto block w-20 h-20 object-contain"
+          onerror="this.style.display='none'; var svg=this.nextElementSibling; if(svg) svg.style.display='block'" />
+        <!-- Fallback SVG (hidden by default). It will be shown if the image fails to load. -->
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="w-20 h-20" style="display:none">
+          <g transform="translate(20, 30)">
+            <rect x="10" y="5" width="140" height="100" rx="12" fill="#5c4530" opacity="0.6"/>
+            <rect x="0" y="10" width="140" height="100" rx="12" fill="#8b6f47" stroke="#3d2d23" stroke-width="3"/>
+            <line x1="5" y1="15" x2="135" y2="15" stroke="#3d2d23" stroke-width="2" stroke-dasharray="8,4"/>
+            <text x="70" y="75" font-family="Arial, sans-serif" font-size="50" font-weight="bold" fill="#f59e0b" text-anchor="middle">₹</text>
+          </g>
+        </svg> -->
+      </div>
+      <h1 class="text-4xl font-bold text-primary-800 mb-2">PaisaGuard</h1>
+      <p class="text-neutral-600">Guard Your Wealth, Grow Your Future</p>
+    </div>
+
+    <!-- Auth Card -->
+    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden relative">
+      <!-- Toggle Pills -->
+      <div class="bg-primary-50 p-2 m-4 rounded-2xl flex relative">
+        <!-- Sliding Background -->
+        <div 
+          class="absolute top-2 bottom-2 w-[calc(50%-8px)] bg-primary-600 rounded-xl transition-all duration-300 ease-in-out shadow-lg"
+          [ngClass]="{'left-2': isLoginMode, 'left-[calc(50%+4px)]': !isLoginMode}">
+        </div>
+        
+        <!-- Toggle Buttons -->
+        <button 
+          (click)="toggleMode()"
+          [class.text-white]="isLoginMode"
+          [class.text-neutral-600]="!isLoginMode"
+          class="flex-1 py-3 text-center font-semibold text-sm z-10 transition-colors duration-300 rounded-xl">
+          Login
+        </button>
+        <button 
+          (click)="toggleMode()"
+          [class.text-white]="!isLoginMode"
+          [class.text-neutral-600]="isLoginMode"
+          class="flex-1 py-3 text-center font-semibold text-sm z-10 transition-colors duration-300 rounded-xl">
+          Sign Up
+        </button>
+      </div>
+
+      <!-- Forms Container with Slider -->
+      <div class="relative overflow-hidden">
+        <div 
+          class="flex transition-transform duration-500 ease-in-out"
+          [ngStyle]="{'transform': isLoginMode ? 'translateX(0)' : 'translateX(-100%)'}">
+          
+          <!-- Login Component -->
+          <div class="w-full flex-shrink-0 p-6">
+            <app-login></app-login>
+          </div>
+          
+          <!-- Signup Component -->
+          <div class="w-full flex-shrink-0 p-6">
+            <app-signup></app-signup>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <p class="text-center text-neutral-600 text-sm mt-6">
+      Secure • Private • Reliable
+    </p>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+/* Additional custom animations for auth page */
+.slide-enter {
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth focus effects for inputs */
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(239, 158, 11, 0.2);
+}
