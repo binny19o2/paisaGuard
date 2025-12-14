@@ -1,0 +1,119 @@
+.navbar-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  background-color: #3d2d23 !important;
+  border-bottom: 2px solid #6f563b !important;
+}
+
+/* Logo styling */
+.logo-img {
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.navbar-brand:hover .logo-img {
+  transform: scale(1.05) rotate(-5deg);
+}
+
+.navbar-brand h5 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Navigation Links */
+.nav-link-item {
+  position: relative;
+  color: #fde68a;
+  font-size: 0.95rem;
+}
+
+.nav-link-item:hover {
+  background-color: rgba(139, 111, 71, 0.3);
+  color: #fbbf24 !important;
+  transform: translateY(-2px);
+}
+
+.nav-link-item.active {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #3d2d23 !important;
+  box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+}
+
+.nav-link-item.active .nav-icon {
+  color: #3d2d23;
+}
+
+.nav-link-item:hover .nav-icon {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
+}
+
+/* Profile Button */
+.profile-button {
+  background-color: rgba(139, 111, 71, 0.2);
+  transition: all 0.3s ease;
+}
+
+.profile-button:hover {
+  background-color: rgba(139, 111, 71, 0.4);
+  border-color: #8b6f47 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Dropdown Menu */
+.dropdown-menu-custom {
+  border: 2px solid #e0d5c7;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-item-custom:hover {
+  background-color: #fef3c7;
+  color: #6f563b !important;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .nav-links {
+    display: none !important;
+  }
+  
+  .navbar-brand h5 {
+    font-size: 1.25rem;
+  }
+  
+  .logo-img {
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
+
+/* Smooth transitions */
+.transition-all {
+  transition: all 0.2s ease;
+}
+
+/* Active link glow effect */
+.nav-link-item.active::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #fbbf24, transparent);
+  border-radius: 2px;
+}

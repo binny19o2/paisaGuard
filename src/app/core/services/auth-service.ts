@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, updateProfile, onAuthStateChanged } from '@angular/fire/auth';
+import { Injectable, inject } from '@angular/core';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, onAuthStateChanged, authState } from '@angular/fire/auth';
 import { Firestore, doc, setDoc, Timestamp } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User as AppUser } from '../models';
@@ -8,15 +8,15 @@ import { User as AppUser } from '../models';
   providedIn: 'root',
 })
 export class AuthService {
+  private auth = inject(Auth);
+  private firestore = inject(Firestore);
+  
   private currentUserSubject = new BehaviorSubject<AppUser | null>(null);
   public currentUser$: Observable<AppUser | null> = this.currentUserSubject.asObservable();
 
-  constructor(
-    private auth: Auth,
-    private firestore: Firestore
-  ) {
-    // Listen to auth state changes
-    onAuthStateChanged(this.auth, async (user) => {
+  constructor() {
+    // Listen to auth state changes using authState observable
+    authState(this.auth).subscribe(user => {
       if (user) {
         const appUser: AppUser = {
           uid: user.uid,
