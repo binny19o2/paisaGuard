@@ -1,6 +1,6 @@
 // src/app/services/transaction.service.ts
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, collectionData, query, orderBy, limit, where } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, collectionData, query, orderBy, limit, where, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Observable, map } from 'rxjs';
 import { Transaction } from '../models'; 
 
@@ -17,7 +17,7 @@ export class TransactionService {
     });
   }
 
-  getRecentTransactions(userId: string, limitCount = 5): Observable<Transaction[]> {
+  getRecentTransactions(userId: string, limitCount = 3): Observable<Transaction[]> {
     const ref = query(
       collection(this.firestore, 'transactions'),
       where('userId', '==', userId),
@@ -86,5 +86,32 @@ export class TransactionService {
         };
       })
     );
+  }
+
+  updateTransaction(id: string, data: Partial<Transaction>) {
+    const ref = doc(this.firestore, 'transactions', id);
+    return updateDoc(ref, data as any);
+  }
+
+  deleteTransaction(id: string) {
+    const ref = doc(this.firestore, 'transactions', id);
+    return deleteDoc(ref);
+  }
+
+  getAllTransactions(userId: string): Observable<Transaction[]> {
+    const ref = query(
+      collection(this.firestore, 'transactions'),
+      where('userId', '==', userId),
+      orderBy('createdAt', 'desc')
+    );
+
+    return collectionData(ref, { idField: 'id' }).pipe(
+      map((txns: any[]) =>
+        txns.map(t => ({
+          ...t,
+          createdAt: (t.createdAt as any)?.toDate ? (t.createdAt as any).toDate() : t.createdAt
+        }))
+      )
+    ) as Observable<Transaction[]>;
   }
 }
