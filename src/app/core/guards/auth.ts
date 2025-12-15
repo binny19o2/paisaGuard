@@ -7,9 +7,9 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   // Temporarily disable guard: always allow navigation.
   // Original logic preserved below for easy revert.
-  return true;
+  // return true;
 
-  /*
+  
   if (authService.isAuthenticated()) {
     return true;
   }
@@ -17,7 +17,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   // Redirect to login page
   router.navigate(['/auth']);
   return false;
-  */
+  
 };
 
 export const noAuthGuard: CanActivateFn = (route, state) => {
@@ -25,9 +25,9 @@ export const noAuthGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   // Temporarily disable guard: always allow navigation.
   // Original logic preserved below for easy revert.
-  return true;
+  // return true;
 
-  /*
+  
   if (!authService.isAuthenticated()) {
     return true;
   }
@@ -35,5 +35,5 @@ export const noAuthGuard: CanActivateFn = (route, state) => {
   // Redirect to dashboard if already logged in
   router.navigate(['/dashboard']);
   return false;
-  */
+  
 };

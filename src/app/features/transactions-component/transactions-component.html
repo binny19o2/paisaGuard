@@ -1,1 +1,113 @@
-<p>transactions-component works!</p>
+<app-navbar></app-navbar>
+
+<div class="max-w-2xl mx-auto bg-neutral-50 border-2 border-primary-200 p-6 rounded-xl shadow-md mt-6 relative">
+  <h2 class="text-xl font-bold mb-4">Add Transaction</h2>
+
+  <!-- Popup message -->
+  <div *ngIf="showMessage"
+       class="fixed inset-0 flex items-center justify-center bg-black/30 z-40">
+    <div class="rounded-lg shadow-lg px-6 py-3 text-sm"
+         [ngClass]="messageType === 'success'
+                    ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                    : 'bg-red-50 text-red-800 border border-red-200'">
+      {{ messageText }}
+    </div>
+  </div>
+
+  <!-- Type -->
+  <div class="mb-4">
+    <p class="text-sm font-medium text-gray-700 mb-1">Type</p>
+    <div class="flex gap-4">
+      <label class="flex items-center gap-2 text-sm text-gray-700">
+        <input type="radio" name="type" value="income"
+               [(ngModel)]="type" (change)="onTypeChange()">
+        Income
+      </label>
+      <label class="flex items-center gap-2 text-sm text-gray-700">
+        <input type="radio" name="type" value="expense"
+               [(ngModel)]="type" (change)="onTypeChange()">
+        Expense
+      </label>
+    </div>
+  </div>
+
+  <!-- Amount -->
+  <div class="mb-3">
+    <label class="block text-sm font-medium text-gray-700 mb-1">Amount</label>
+    <input type="number" placeholder="Amount"
+           #amount="ngModel"
+           class="input w-full border border-neutral-200 bg-neutral-50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-400"
+           [(ngModel)]="form.amount"
+           name="amount"
+           required
+           min="1">
+    <div *ngIf="amount.invalid && amount.touched"
+         class="text-xs text-red-600 mt-1">
+      Amount is required and must be greater than 0.
+    </div>
+  </div>
+
+  <!-- Created At -->
+  <div class="mb-3">
+    <label class="block text-sm font-medium text-gray-700 mb-1">Date &amp; Time</label>
+    <input type="datetime-local"
+           class="input w-full border border-neutral-200 bg-neutral-50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-400"
+           [(ngModel)]="form.createdAt"
+           name="createdAt">
+  </div>
+
+  <!-- Category -->
+  <div class="mb-3">
+    <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+    <select class="input w-full border border-neutral-200 bg-neutral-50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-400"
+            #category="ngModel"
+            [(ngModel)]="form.category"
+            name="category"
+            required>
+      <option value="">Select Category</option>
+      <option *ngFor="let cat of categories" [value]="cat.name">
+        {{ cat.name }}
+      </option>
+    </select>
+    <div *ngIf="category.invalid && category.touched"
+         class="text-xs text-red-600 mt-1">
+      Please select a category.
+    </div>
+  </div>
+
+  <!-- Account -->
+  <div class="mb-3">
+    <label class="block text-sm font-medium text-gray-700 mb-1">Account</label>
+    <select class="input w-full border border-neutral-200 bg-neutral-50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-400"
+            [(ngModel)]="form.account"
+            name="account">
+      <option value="cash">Cash</option>
+      <option value="savings">Savings</option>
+      <option value="card">Card</option>
+      <option value="upi">UPI</option>
+    </select>
+  </div>
+
+  <!-- Note -->
+  <div class="mb-4">
+    <label class="block text-sm font-medium text-gray-700 mb-1">Note</label>
+    <textarea placeholder="Note"
+              class="input w-full border border-neutral-200 bg-neutral-50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-400"
+              [(ngModel)]="form.note"
+              name="note"></textarea>
+  </div>
+
+  <div class="flex gap-3">
+    <button class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 rounded-lg shadow-sm transition disabled:opacity-60"
+            (click)="submit()"
+            [disabled]="isSubmitting">
+      {{ isSubmitting ? 'Saving...' : 'Save Transaction' }}
+    </button>
+
+    <button type="button"
+            class="px-4 py-2 rounded-lg border border-neutral-300 bg-white text-sm text-gray-700 hover:bg-neutral-50"
+            (click)="resetForm()">
+      Reset
+    </button>
+  </div>
+</div>

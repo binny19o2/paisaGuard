@@ -19,7 +19,56 @@
     </div>
 
     <!-- Placeholder Content -->
-    <div class="row">
+     <div class="grid md:grid-cols-2 gap-6 mt-6">
+
+  <!-- Overview -->
+  <div class="bg-white p-4 rounded-xl shadow space-y-2">
+    <h3 class="font-semibold mb-2">Overview</h3>
+    <div class="flex justify-between text-sm text-gray-600">
+      <span>Total Income</span>
+      <span class="font-semibold text-green-600">
+        ₹ {{ (overview$ | async)?.income || 0 }}
+      </span>
+    </div>
+    <div class="flex justify-between text-sm text-gray-600">
+      <span>Total Expense</span>
+      <span class="font-semibold text-red-600">
+        ₹ {{ (overview$ | async)?.expense || 0 }}
+      </span>
+    </div>
+    <div class="border-t pt-2 mt-2 flex justify-between text-sm">
+      <span>Remaining</span>
+      <span class="font-semibold"
+            [ngClass]="((overview$ | async)?.balance || 0) >= 0 ? 'text-green-700' : 'text-red-700'">
+        ₹ {{ (overview$ | async)?.balance || 0 }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Recent Transactions -->
+  <div class="bg-white p-4 rounded-xl shadow">
+    <h3 class="font-semibold mb-3">Recent Transactions</h3>
+
+    <div *ngFor="let txn of recentTransactions$ | async"
+         class="flex justify-between items-center p-3 rounded mb-2 border"
+         [ngClass]="txn.color">
+      <div class="flex flex-col">
+        <span class="font-semibold">{{ txn.category }} · {{ txn.account }}</span>
+        <span class="text-xs text-gray-600">{{ txn.createdAt | date:'short' }}</span>
+      </div>
+      <div class="text-right">
+        <span class="font-semibold"
+              [ngClass]="txn.type === 'income' ? 'text-green-600' : 'text-red-600'">
+          {{ txn.type === 'income' ? '+' : '-' }} ₹ {{ txn.amount }}
+        </span>
+        <div class="text-xs text-gray-600">{{ txn.note }}</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+    <!-- <div class="row">
       <div class="col-12">
         <div class="bg-white rounded-4 shadow-sm p-5 text-center">
           <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-4"
@@ -49,6 +98,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

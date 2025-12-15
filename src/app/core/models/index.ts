@@ -8,16 +8,29 @@ export interface User {
   createdAt: Timestamp;
 }
 
+// export interface Transaction {
+//   id?: string;
+//   userId: string;
+//   type: 'income' | 'expense';
+//   amount: number;
+//   category: string;
+//   note?: string;
+//   date: Timestamp;
+//   createdAt: Timestamp;
+// }
+
 export interface Transaction {
   id?: string;
   userId: string;
   type: 'income' | 'expense';
   amount: number;
   category: string;
+  account: string;
   note?: string;
-  date: Timestamp;
-  createdAt: Timestamp;
+  createdAt: any; // Firestore Timestamp
+  color: string; // for UI
 }
+
 
 export interface Investment {
   id?: string;
