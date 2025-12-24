@@ -27,8 +27,8 @@ export interface Transaction {
   category: string;
   account: string;
   note?: string;
-  createdAt: any; // Firestore Timestamp
-  color: string; // for UI
+  createdAt: any; 
+  color: string; 
 }
 
 
