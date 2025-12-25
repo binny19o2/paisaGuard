@@ -84,6 +84,95 @@
   color: #6f563b !important;
 }
 
+/* Mobile Menu Button */
+.mobile-menu-btn {
+  transition: all 0.2s ease;
+}
+
+.mobile-menu-btn:hover {
+  transform: scale(1.1);
+}
+
+.mobile-menu-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.3);
+}
+
+/* Mobile Navigation Menu */
+.mobile-nav-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.mobile-nav-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  pointer-events: all;
+}
+
+.mobile-nav-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 85%;
+  max-width: 320px;
+  height: 100%;
+  background-color: #3d2d23;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  pointer-events: all;
+  animation: slideInFromRight 0.3s ease;
+}
+
+.mobile-nav-header {
+  position: sticky;
+  top: 0;
+  background-color: #3d2d23;
+  z-index: 10;
+}
+
+.mobile-nav-body {
+  padding-bottom: 2rem;
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.mobile-nav-link {
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.mobile-nav-link:hover {
+  background-color: rgba(139, 111, 71, 0.3);
+  color: #fbbf24 !important;
+  border-color: rgba(251, 191, 36, 0.3);
+  transform: translateX(5px);
+}
+
+.mobile-nav-link.active {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #3d2d23 !important;
+  border-color: #d97706;
+  box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+}
+
 /* Responsive */
 @media (max-width: 992px) {
   .nav-links {
@@ -97,6 +186,26 @@
   .logo-img {
     width: 50px !important;
     height: 50px !important;
+  }
+
+  .profile-dropdown-container {
+    display: none !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-brand h5 {
+    font-size: 1.1rem;
+  }
+  
+  .logo-img {
+    width: 45px !important;
+    height: 45px !important;
+  }
+
+  .mobile-nav-link {
+    font-size: 0.95rem;
+    padding: 0.75rem 1rem !important;
   }
 }
 

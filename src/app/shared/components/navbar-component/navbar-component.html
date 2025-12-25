@@ -10,7 +10,18 @@
         </div>
       </div>
 
-      <!-- Navigation Links -->
+      <!-- Mobile Menu Button -->
+      <button 
+        class="d-lg-none mobile-menu-btn btn border-0 p-2"
+        (click)="toggleMobileMenu()"
+        style="background-color: transparent; color: #fbbf24;">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path *ngIf="!isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          <path *ngIf="isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <!-- Navigation Links - Desktop -->
       <div class="nav-links d-none d-lg-flex align-items-center gap-2">
         <!-- <a routerLink="/dashboard" 
            routerLinkActive="active"
@@ -43,15 +54,7 @@
           Goals
         </a>
 
-        <a routerLink="/analytics" 
-           routerLinkActive="active"
-           class="nav-link-item px-4 py-2 rounded-3 text-decoration-none fw-semibold d-flex align-items-center gap-2 transition-all"
-           style="color: #fde68a; transition: all 0.2s ease;">
-          <svg class="nav-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-          </svg>
-          Analytics
-        </a>
+       
 
         <a routerLink="/investments" 
            routerLinkActive="active"
@@ -62,10 +65,20 @@
           </svg>
           Investments
         </a>
+        
+        <a routerLink="/analytics" routerLinkActive="active"
+        class="nav-link-item px-4 py-2 rounded-3 text-decoration-none fw-semibold d-flex align-items-center gap-2 transition-all"
+        style="color: #fde68a; transition: all 0.2s ease;">
+        <svg class="nav-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+        Analytics
+      </a>
+    </div>
       </div>
-
-      <!-- Profile Dropdown -->
-      <div class="profile-dropdown-container position-relative" (clickOutside)="closeProfileDropdown()">
+      <!-- Profile Dropdown - Desktop Only -->
+      <div class="profile-dropdown-container position-relative d-none d-lg-block" (clickOutside)="closeProfileDropdown()">
         <button 
           (click)="toggleProfileDropdown()"
           class="profile-button btn d-flex align-items-center gap-2 border-2 px-3 py-2 rounded-3"
@@ -125,5 +138,101 @@
       </div>
 
     </div>
-  </div>
+  
 </nav>
+
+<!-- Mobile Navigation Menu - Outside navbar for proper positioning -->
+<div *ngIf="isMobileMenuOpen" 
+     class="mobile-nav-menu d-lg-none"
+     (click)="$event.stopPropagation()">
+  <div class="mobile-nav-overlay" (click)="closeMobileMenu()"></div>
+  <div class="mobile-nav-content">
+    <div class="mobile-nav-header d-flex align-items-center justify-content-between px-4 py-3 border-bottom" style="border-color: #6f563b !important;">
+      <h5 class="mb-0 fw-bold" style="color: #fbbf24;">Menu</h5>
+      <button 
+        class="btn border-0 p-0"
+        (click)="closeMobileMenu()"
+        style="background-color: transparent; color: #fbbf24;">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="mobile-nav-body px-4 py-3">
+      <div class="d-flex flex-column gap-2">
+        <a routerLink="/transactions" 
+           routerLinkActive="active"
+           (click)="onNavLinkClick()"
+           class="mobile-nav-link px-4 py-3 rounded-3 text-decoration-none fw-semibold d-flex align-items-center gap-3"
+           style="color: #fde68a; transition: all 0.2s ease;">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+          </svg>
+          Transactions
+        </a>
+
+        <a routerLink="/goals" 
+           routerLinkActive="active"
+           (click)="onNavLinkClick()"
+           class="mobile-nav-link px-4 py-3 rounded-3 text-decoration-none fw-semibold d-flex align-items-center gap-3"
+           style="color: #fde68a; transition: all 0.2s ease;">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+          </svg>
+          Goals
+        </a>
+
+        <a routerLink="/investments" 
+           routerLinkActive="active"
+           (click)="onNavLinkClick()"
+           class="mobile-nav-link px-4 py-3 rounded-3 text-decoration-none fw-semibold d-flex align-items-center gap-3"
+           style="color: #fde68a; transition: all 0.2s ease;">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+          </svg>
+          Investments
+        </a>
+
+        <a routerLink="/analytics" 
+           routerLinkActive="active"
+           (click)="onNavLinkClick()"
+           class="mobile-nav-link px-4 py-3 rounded-3 text-decoration-none fw-semibold d-flex align-items-center gap-3"
+           style="color: #fde68a; transition: all 0.2s ease;">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+          Analytics
+        </a>
+
+        <!-- Mobile Profile Section -->
+        <div class="border-top border-secondary pt-3 mt-3" style="border-color: #6f563b !important;">
+          <div class="px-4 py-2 mb-3">
+            <p class="mb-1 fw-semibold" style="color: #fbbf24;">{{ currentUser?.displayName || 'User' }}</p>
+            <p class="mb-0 small" style="color: #fde68a;">{{ currentUser?.email }}</p>
+          </div>
+          
+          <a routerLink="/profile" 
+             (click)="onNavLinkClick()"
+             class="mobile-nav-link px-4 py-3 rounded-3 text-decoration-none fw-semibold d-flex align-items-center gap-3"
+             style="color: #fde68a; transition: all 0.2s ease;">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            Profile Settings
+          </a>
+          
+          <button 
+            (click)="logout(); onNavLinkClick()"
+            class="mobile-nav-link px-4 py-3 rounded-3 w-100 border-0 bg-transparent text-start text-decoration-none fw-semibold d-flex align-items-center gap-3"
+            style="color: #fde68a; transition: all 0.2s ease;">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -15,6 +15,7 @@ import { ClickOutsideDirective } from '../../directives/click-outside.directive'
 export class NavbarComponent implements OnInit {
   currentUser: User | null = null;
   isProfileDropdownOpen = false;
+  isMobileMenuOpen = false;
 
   constructor(
     private authService: AuthService,
@@ -33,6 +34,27 @@ export class NavbarComponent implements OnInit {
 
   closeProfileDropdown() {
     this.isProfileDropdownOpen = false;
+  }
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    if (this.isMobileMenuOpen) {
+      this.isProfileDropdownOpen = false;
+      // Prevent body scroll when menu is open
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
+    document.body.style.overflow = '';
+  }
+
+  onNavLinkClick() {
+    this.closeMobileMenu();
+    this.closeProfileDropdown();
   }
 
   async logout() {
