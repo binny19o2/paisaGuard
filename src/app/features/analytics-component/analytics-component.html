@@ -1,1 +1,87 @@
-<p>analytics-component works!</p>
+<app-navbar></app-navbar>
+
+<div class="max-w-7xl mx-auto p-6 mt-6">
+  <h2 class="text-2xl font-bold mb-6">Analytics</h2>
+
+  <!-- View Toggle Buttons -->
+  <div class="flex gap-4 mb-6">
+    <button 
+      (click)="switchView('breakdown')"
+      class="px-6 py-3 rounded-lg font-semibold transition"
+      [ngClass]="currentView === 'breakdown' 
+        ? 'bg-primary-600 text-white shadow-md' 
+        : 'bg-white border-2 border-primary-200 text-gray-700 hover:bg-primary-50'">
+      Expense Breakdown
+    </button>
+    <button 
+      (click)="switchView('trend')"
+      class="px-6 py-3 rounded-lg font-semibold transition"
+      [ngClass]="currentView === 'trend' 
+        ? 'bg-primary-600 text-white shadow-md' 
+        : 'bg-white border-2 border-primary-200 text-gray-700 hover:bg-primary-50'">
+      Monthly Trend
+    </button>
+  </div>
+
+  <!-- Expense Breakdown View -->
+  <div *ngIf="currentView === 'breakdown'" class="bg-white border-2 border-primary-200 rounded-xl shadow-md p-6">
+    <h3 class="text-xl font-semibold mb-4">Expense Breakdown by Category</h3>
+    
+    <div class="mb-4">
+      <p class="text-sm text-gray-600 mb-2">Total Expense for {{ getCurrentMonthName() }}</p>
+      <p class="text-2xl font-bold text-red-600">
+        ₹ {{ (totalExpense$ | async) || 0 | number:'1.0-0' }}
+      </p>
+    </div>
+
+    <div class="chart-container" style="position: relative; height: 340px; margin-bottom: 2rem;">
+      <canvas #pieChartCanvas></canvas>
+    </div>
+
+    <!-- Month Navigation -->
+    <div class="flex items-center justify-center gap-4 mt-6 pt-6 border-t border-gray-200">
+      <button 
+        (click)="previousMonth()"
+        class="w-10 h-10 flex items-center justify-center rounded-full bg-primary-600 hover:bg-primary-700 text-white transition shadow-md"
+        title="Previous Month">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      
+      <div class="px-6 py-2 bg-neutral-50 rounded-lg border border-primary-200">
+        <p class="text-lg font-semibold text-gray-800">{{ getCurrentMonthName() }}</p>
+      </div>
+      
+      <button 
+        (click)="nextMonth()"
+        [disabled]="!canGoToNextMonth()"
+        class="w-10 h-10 flex items-center justify-center rounded-full transition shadow-md"
+        [ngClass]="canGoToNextMonth() 
+          ? 'bg-primary-600 hover:bg-primary-700 text-white' 
+          : 'bg-gray-300 text-gray-500 cursor-not-allowed'"
+        title="Next Month">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Monthly Trend View -->
+  <div *ngIf="currentView === 'trend'" class="bg-white border-2 border-primary-200 rounded-xl shadow-md p-6">
+    <h3 class="text-xl font-semibold mb-4">Monthly Expense Trend</h3>
+    <p class="text-sm text-gray-600 mb-6">Last 6 months expense overview</p>
+
+    <div class="chart-container" style="position: relative; height: 340px;">
+      <canvas #lineChartCanvas></canvas>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="(currentView === 'breakdown' && (categoryExpenses$ | async)?.length === 0) || 
+              (currentView === 'trend' && (monthlyTrend$ | async)?.length === 0)"
+       class="bg-white border-2 border-primary-200 rounded-xl shadow-md p-12 text-center">
+    <p class="text-gray-500 text-lg">No expense data available for this period.</p>
+  </div>
+</div>
